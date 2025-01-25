@@ -8,11 +8,27 @@ from selenium_ui.jira.pages.pages import Login
 from extension.jira.extension_pages import ProjectList, ProjectComplianceSettings, AuditProject
 from util.conf import JIRA_SETTINGS
 
-def ctc_view_projects(webdriver, datasets):
+def admin_login(webdriver, username='admin', password='admin'):
+    login_page = Login(webdriver)
+    login_page.delete_all_cookies()
+    login_page.go_to()
+    login_page.set_credentials(username=username, password=password)
+    
+    # Handling first login setup steps if necessary
+    if login_page.is_first_login():
+        login_page.first_login_setup()
+    if login_page.is_first_login_second_page():
+        login_page.first_login_second_page_setup()
+    
+    # Wait until the page has loaded after login
+    login_page.wait_for_page_loaded()
+
+def ctc_view_projects(webdriver, datasets):    
     page = BasePage(webdriver)
 
+    admin_login(webdriver)
     project_list_page = ProjectList(webdriver)
-
+    
     @print_timing("selenium_ctc_view_projects_action")
     def measure():
         project_list_page.go_to()
@@ -23,6 +39,7 @@ def ctc_view_projects(webdriver, datasets):
 def ctc_view_project_compliance_settings(webdriver, datasets):
     page = BasePage(webdriver)
 
+    admin_login(webdriver)
     project_compliance_settings = ProjectComplianceSettings(webdriver, project_key=datasets['current_session']['project_key'])
 
     @print_timing("ctc_view_project_compliance_settings")
@@ -35,10 +52,12 @@ def ctc_view_project_compliance_settings(webdriver, datasets):
 def ctc_set_project_compliance_settings(webdriver, datasets):
     page = BasePage(webdriver)
 
+    admin_login(webdriver)
     project_compliance_settings = ProjectComplianceSettings(webdriver, project_key=datasets['current_session']['project_key'])
 
     @print_timing("ctc_set_project_compliance_settings")
     def measure():
+
         project_compliance_settings.go_to()
         project_compliance_settings.wait_for_compliance_settings_loaded()
 
@@ -55,6 +74,7 @@ def ctc_set_project_compliance_settings(webdriver, datasets):
 def ctc_view_project_audit_history(webdriver, datasets):
     page = BasePage(webdriver)
 
+    admin_login(webdriver)
     project_audit_page = AuditProject(webdriver, project_key=datasets['current_session']['project_key'])
 
     @print_timing("ctc_view_project_audit_history")
@@ -67,6 +87,7 @@ def ctc_view_project_audit_history(webdriver, datasets):
 def ctc_view_project_audit_history_details(webdriver, datasets):
     page = BasePage(webdriver)
 
+    admin_login(webdriver)
     project_audit_page = AuditProject(webdriver, project_key=datasets['current_session']['project_key'])
 
     @print_timing("ctc_view_project_audit_history_details")
@@ -80,6 +101,7 @@ def ctc_view_project_audit_history_details(webdriver, datasets):
 def ctc_complete_new_audit(webdriver, datasets):
     page = BasePage(webdriver)
 
+    admin_login(webdriver)
     project_audit_page = AuditProject(webdriver, project_key=datasets['current_session']['project_key'])
 
     @print_timing("ctc_complete_new_audit")
