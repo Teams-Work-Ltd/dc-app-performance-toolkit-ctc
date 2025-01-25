@@ -3,24 +3,24 @@ settings:
   artifacts-dir: results/jira/%Y-%m-%d_%H-%M-%S
   aggregator: consolidator
   verbose: false
-  check-updates: false                 # disable bzt check for updates
+  check-updates: false # disable bzt check for updates
   env:
-    application_hostname: test_jira_instance.atlassian.com    # Jira DC hostname without protocol and port e.g. test-jira.atlassian.com or localhost
-    application_protocol: http         # http or https
-    application_port: 80               # 80, 443, 8080, 2990, etc
-    secure: True                       # Set False to allow insecure connections, e.g. when using self-signed SSL certificate
-    application_postfix: /jira         # e.g. /jira for TerraForm deployment url like `http://a1234-54321.us-east-2.elb.amazonaws.com/jira`. Leave this value blank for url without postfix.
+    application_hostname: a8b69f4e435504c8999a75089d1dc903-1729614102.us-east-2.elb.amazonaws.com # Jira DC hostname without protocol and port e.g. test-jira.atlassian.com or localhost
+    application_protocol: http # http or https
+    application_port: 80 # 80, 443, 8080, 2990, etc
+    secure: True # Set False to allow insecure connections, e.g. when using self-signed SSL certificate
+    application_postfix: /jira # e.g. /jira for TerraForm deployment url like `http://a1234-54321.us-east-2.elb.amazonaws.com/jira`. Leave this value blank for url without postfix.
     admin_login: admin
     admin_password: admin
-    load_executor: jmeter              # jmeter and locust are supported. jmeter by default.
-    concurrency: 200                   # number of concurrent virtual users for jmeter or locust scenario
-    test_duration: 45m
-    ramp-up: 3m                        # time to spin all concurrent users
-    total_actions_per_hour: 54500      # number of total JMeter/Locust actions per hour
-    WEBDRIVER_VISIBLE: False
+    load_executor: jmeter # jmeter and locust are supported. jmeter by default.
+    concurrency: 2 # number of concurrent virtual users for jmeter or locust scenario
+    test_duration: 15m
+    ramp-up: 0m # time to spin all concurrent users
+    total_actions_per_hour: 54500 # number of total JMeter/Locust actions per hour
+    WEBDRIVER_VISIBLE: True
     JMETER_VERSION: 5.6.3
     LANGUAGE: en_US.utf8
-    allow_analytics: Yes               # Allow sending basic run analytics to Atlassian. These analytics help us to understand how the tool is being used and help us to continue to invest in this tooling. For more details please see our README.
+    allow_analytics: Yes # Allow sending basic run analytics to Atlassian. These analytics help us to understand how the tool is being used and help us to continue to invest in this tooling. For more details please see our README.
     environment_compliance_check: True # Pre-test environment compliance validation. Set to "False" to skip it.
     # Action percentage for Jmeter and Locust load executors
     create_issue: 4
@@ -37,7 +37,7 @@ settings:
     browse_boards: 1
     standalone_extension: 0 # By default disabled
     # Custom dataset section.
-    custom_dataset_query:          # Write JQL query to add JQL output to the app/datasets/jira/custom-issues.csv, e.g. "summary ~ 'AppIssue*'"
+    custom_dataset_query: # Write JQL query to add JQL output to the app/datasets/jira/custom-issues.csv, e.g. "summary ~ 'AppIssue*'"
 services:
   - module: shellexec
     prepare:
@@ -97,7 +97,7 @@ modules:
   jmeter:
     version: ${JMETER_VERSION}
     detect-plugins: true
-    memory-xmx: 8G  # allow JMeter to use up to 8G of memory
+    memory-xmx: 8G # allow JMeter to use up to 8G of memory
     plugins:
       - jpgc-casutg=2.10
       - jpgc-dummy=0.4
@@ -108,14 +108,14 @@ modules:
       - jpgc-perfmon=2.1
       - jpgc-prmctl=0.4
       - jpgc-tst=2.6
-      - bzm-random-csv=0.8    # not used default jmx file
+      - bzm-random-csv=0.8 # not used default jmx file
     system-properties:
       server.rmi.ssl.disable: true
       java.rmi.server.hostname: localhost
       httpsampler.ignore_failed_embedded_resources: "true"
   selenium:
     chromedriver:
-      version: "130.0.6723.91" # Supports Chrome version 130. You can refer to https://googlechromelabs.github.io/chrome-for-testing
+      version: "132.0.6834.110" # Supports Chrome version 130. You can refer to https://googlechromelabs.github.io/chrome-for-testing
 reporting:
-- data-source: sample-labels
-  module: junit-xml
+  - data-source: sample-labels
+    module: junit-xml

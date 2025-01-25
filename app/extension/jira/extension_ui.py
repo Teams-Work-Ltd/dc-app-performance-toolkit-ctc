@@ -8,7 +8,6 @@ from selenium_ui.jira.pages.pages import Login
 from extension.jira.extension_pages import ProjectList, ProjectComplianceSettings, AuditProject
 from util.conf import JIRA_SETTINGS
 
-
 def ctc_view_projects(webdriver, datasets):
     page = BasePage(webdriver)
 
@@ -43,11 +42,11 @@ def ctc_set_project_compliance_settings(webdriver, datasets):
         project_compliance_settings.go_to()
         project_compliance_settings.wait_for_compliance_settings_loaded()
 
+        project_compliance_settings.set_compliance_owner()
         project_compliance_settings.set_compliance_type()
-        project_compliance_settings.set_compliance_categories()
-        project_compliance_settings.set_compliance_categories()
         project_compliance_settings.set_audit_frequency()
-        project_compliance_settings.set_audit_configuration()
+        project_compliance_settings.set_audit_configuration()        
+        project_compliance_settings.set_compliance_categories()
 
         project_compliance_settings.save_audit_configuration()
 
