@@ -5,33 +5,14 @@ from selenium.webdriver.common.by import By
 from selenium_ui.base_page import BasePage
 from selenium_ui.conftest import print_timing
 from selenium_ui.jira.pages.pages import Login
-from extension.jira.extenstion_pages import NewProject, ProjectDetails, ProjectsList, GoalsList, TagsList
+from extension.jira.extension_pages import ProjectList, ProjectComplianceSettings, AuditProject
 from util.conf import JIRA_SETTINGS
 
 
 def ctc_view_projects(webdriver, datasets):
     page = BasePage(webdriver)
 
-    # To run action as specific user uncomment code bellow.
-    # NOTE: If app_specific_action is running as specific user, make sure that app_specific_action is running
-    # just before test_2_selenium_z_log_out action
-    #
-    # @print_timing("selenium_app_specific_user_login")
-    # def measure():
-    #     def app_specific_user_login(username='admin', password='admin'):
-    #         login_page = Login(webdriver)
-    #         login_page.delete_all_cookies()
-    #         login_page.go_to()
-    #         login_page.set_credentials(username=username, password=password)
-    #         if login_page.is_first_login():
-    #             login_page.first_login_setup()
-    #         if login_page.is_first_login_second_page():
-    #             login_page.first_login_second_page_setup()
-    #         login_page.wait_for_page_loaded()
-    #     app_specific_user_login(username='admin', password='admin')
-    # measure()
-
-    project_list_page = ProjectsList(webdriver)
+    project_list_page = ProjectList(webdriver)
 
     @print_timing("selenium_ctc_view_projects_action")
     def measure():
@@ -40,54 +21,72 @@ def ctc_view_projects(webdriver, datasets):
 
     measure()
 
-def ctc_view_goals(webdriver, datasets):
+def ctc_view_project_compliance_settings(webdriver, datasets):
     page = BasePage(webdriver)
 
-    goal_list_page = GoalsList(webdriver)
+    project_compliance_settings = ProjectComplianceSettings(webdriver, project_key=datasets['current_session']['project_key'])
 
-    @print_timing("selenium_ctc_view_goals_action")
+    @print_timing("ctc_view_project_compliance_settings")
     def measure():
-        goal_list_page.go_to()
-        goal_list_page.wait_for_page_loaded()
+        project_compliance_settings.go_to()
+        project_compliance_settings.wait_for_compliance_settings_loaded()
 
     measure()    
 
-def ctc_view_tags(webdriver, datasets):
+def ctc_set_project_compliance_settings(webdriver, datasets):
     page = BasePage(webdriver)
 
-    tag_list_page = TagsList(webdriver)
+    project_compliance_settings = ProjectComplianceSettings(webdriver, project_key=datasets['current_session']['project_key'])
 
-    @print_timing("selenium_ctc_view_tags_action")
+    @print_timing("ctc_set_project_compliance_settings")
     def measure():
-        tag_list_page.go_to()
-        tag_list_page.wait_for_page_loaded()
+        project_compliance_settings.go_to()
+        project_compliance_settings.wait_for_compliance_settings_loaded()
+
+        project_compliance_settings.set_compliance_type()
+        project_compliance_settings.set_compliance_categories()
+        project_compliance_settings.set_compliance_categories()
+        project_compliance_settings.set_audit_frequency()
+        project_compliance_settings.set_audit_configuration()
+
+        project_compliance_settings.save_audit_configuration()
+
+    measure()        
+
+def ctc_view_project_audit_history(webdriver, datasets):
+    page = BasePage(webdriver)
+
+    project_audit_page = AuditProject(webdriver, project_key=datasets['current_session']['project_key'])
+
+    @print_timing("ctc_view_project_audit_history")
+    def measure():
+        project_audit_page.go_to()
+        project_audit_page.wait_for_audit_list()
 
     measure()  
 
-def ctc_create_project(webdriver, datasets):
+def ctc_view_project_audit_history_details(webdriver, datasets):
     page = BasePage(webdriver)
 
-    new_project_page = NewProject(webdriver)
+    project_audit_page = AuditProject(webdriver, project_key=datasets['current_session']['project_key'])
 
-    @print_timing("selenium_ctc_create_projects_action")
+    @print_timing("ctc_view_project_audit_history_details")
     def measure():
-        new_project_page.go_to()
-        new_project_page.wait_for_new_project_title()
-        new_project_page.fill_new_project_title()
-        new_project_page.new_project_submit()
+        project_audit_page.go_to()
+        project_audit_page.wait_for_audit_list()
+        project_audit_page.view_audit_history()
 
-    measure()
+    measure()      
 
-def ctc_create_project_update(webdriver, datasets):
+def ctc_complete_new_audit(webdriver, datasets):
     page = BasePage(webdriver)
 
-    project_details_page = ProjectDetails(webdriver)
+    project_audit_page = AuditProject(webdriver, project_key=datasets['current_session']['project_key'])
 
-    @print_timing("selenium_ctc_create_project_update_action")
+    @print_timing("ctc_complete_new_audit")
     def measure():
-        project_details_page.go_to()
-        project_details_page.wait_for_project_details()
-        project_details_page.fill_project_update()
-        project_details_page.create_update_submit()
+        project_audit_page.go_to()
+        project_audit_page.wait_for_audit_list()        
+        project_audit_page.complete_new_audit()
 
     measure()    

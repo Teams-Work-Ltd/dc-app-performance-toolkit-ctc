@@ -5,6 +5,16 @@ from selenium_ui.base_page import BasePage
 
 from extension.jira.extension_selectors import UrlManager, ProjectComplianceSettingsPageLocators, ProjectListPageLocators, AuditProjectLocators
 
+class ProjectList(BasePage):
+    def __init__(self, driver):
+        BasePage.__init__(self, driver)
+        url_manager = UrlManager()
+        self.page_url = url_manager.project_list_url()
+
+    def wait_for_page_loaded(self):
+        self.wait_until_any_ec_presented(
+            selectors=[ProjectListPageLocators.project_table, ProjectListPageLocators.project_table_loaded])
+
 class ProjectComplianceSettings(BasePage):
     page_loaded_selector = ProjectComplianceSettingsPageLocators.compliance_page_settings_ready
 
@@ -17,7 +27,7 @@ class ProjectComplianceSettings(BasePage):
         self.wait_until_visible(ProjectComplianceSettingsPageLocators.compliance_page_settings_ready)
 
     def set_compliance_owner(self):
-        self.wait_until_clickable(ProjectComplianceSettingsPageLocators.compliance_owner_select).send_keys('owner')
+        self.wait_until_clickable(ProjectComplianceSettingsPageLocators.compliance_owner_select)
 
     def set_compliance_type(self):
         self.wait_until_clickable(ProjectComplianceSettingsPageLocators.compliance_type_select)
@@ -231,16 +241,3 @@ class AuditProject(BasePage):
         self.get_element(AuditProjectLocators.new_audit_complete_button).click()
         self.wait_until_visible(AuditProjectLocators.audit_complete_message)
         
-    def create_update_submit(self):
-        self.wait_until_clickable(ProjectDetailsPageLocators.create_update_button).click()
-
-
-class ProjectList(BasePage):
-    def __init__(self, driver):
-        BasePage.__init__(self, driver)
-        url_manager = UrlManager()
-        self.page_url = url_manager.project_list_url()
-
-    def wait_for_page_loaded(self):
-        self.wait_until_any_ec_presented(
-            selectors=[ProjectListPageLocators.project_table])

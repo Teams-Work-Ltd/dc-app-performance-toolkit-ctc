@@ -17,30 +17,37 @@ class UrlManager:
     def project_compliance_settings_url(self, project_key):
       return f"{self.host}/projects/{project_key}?{self.project_compliance_settings}"
 
+class ProjectListPageLocators:
+    project_list_url = UrlManager().project_list_url()
+    search_project_name = (By.ID, "search-project-name")
+    project_table = (By.ID, "audit-project-compliance-content-table-a2f4")
+    project_table_loaded = (By.CLASS_NAME, "loaded")
+    project_search_button = (By.ID, "search-projects-button")
+
 class ProjectComplianceSettingsPageLocators:
     def __init__(self, project_key):
         url_manager = UrlManager()
         self.project_compliance_url = url_manager.project_compliance_settings_url(project_key)
-        self.compliance_page_settings_ready = (By.ID, '')
+        self.compliance_page_settings_ready = (By.ID, 'complianceOwner-label')
         self.compliance_owner_select = (By.ID, 'complianceOwner')
         self.compliance_type_select = (By.ID, 'complianceType')
-        self.compliance_type_select_confidential = (By.ID, 'react-select-2-option-6')
+        self.compliance_type_select_confidential = (By.ID, 'react-select-complianceType-option-6')
         self.compliance_categories_select = (By.ID, "complianceCategories")
-        self.compliance_category_financial_reporting = (By.ID, 'react-select-3-option-1')
+        self.compliance_category_financial_reporting = (By.ID, 'react-select-complianceCategories-option-1')
         self.audit_frequency_select = (By.ID, "auditFrequency")
-        self.audit_frequency_ad_hoc = (By.ID, 'react-select-4-option-7')
-        self.compliance_configuration_gdpr = (By.ID, "GDPR-uid1")
-        self.compliance_configuration_iso_27001 = (By.ID, "ISO_27001-uid2")
-        self.compliance_coinfiguration_iso_20000 = (By.ID, "ISO_20000-uid3")
-        self.save_project_compliance_button = (By.ID, "TODO")
+        self.audit_frequency_ad_hoc = (By.ID, 'react-select-auditFrequency-option-7')
+        self.compliance_configuration_gdpr = (By.ID, "complianceChecklist-option-GDPR")
+        self.compliance_configuration_iso_27001 = (By.ID, "complianceChecklist-option-ISO_27001")
+        self.compliance_coinfiguration_iso_20000 = (By.ID, "complianceChecklist-option-ISO_20000")
+        self.save_project_compliance_button = (By.ID, "save-compliance-settings")
         self.save_success_message = (By.XPATH, "//div[@role='alert']//span[text()='Compliance settings updated successfully']")
 
 class AuditProjectLocators:
     audit_project_url = UrlManager().audit_project_url()
-    audit_list_page_ready = (By.ID, '') # Should be the id/class of the audit table list
+    audit_list_page_ready = (By.ID, 'audit-history-link')
     
     audit_history_button = (By.ID, 'audit-history-link')
-    audit_history_table = (By.ID, '')    
+    audit_history_table = (By.ID, 'audit-project-history-content-table-c9af')    
 
     dpo_radio_option = (By.CSS_SELECTOR, "input[name='status-cyaml.gdpr.checklist.name-0-0'][value='cyaml.y']")
     dpo_evidence_field = (By.ID, 'evidence-cyaml.gdpr.checklist.name-0-0')
@@ -132,7 +139,7 @@ class AuditProjectLocators:
     personal_data_deleted_evidence_field = (By.ID, 'evidence-cyaml.gdpr.checklist.name-6-1')
     automated_retention_rules_radio_option = (By.CSS_SELECTOR, "input[name='status-cyaml.gdpr.checklist.name-6-2'][value='cyaml.y']")
     automated_retention_rules_evidence_field = (By.ID, 'evidence-cyaml.gdpr.checklist.name-6-2')
-    
+
     third_party_dpa_radio_option = (By.CSS_SELECTOR, "input[name='status-cyaml.gdpr.checklist.name-7-0'][value='cyaml.y']")
     third_party_dpa_evidence_field = (By.ID, 'evidence-cyaml.gdpr.checklist.name-7-0')
     gdpr_data_transfer_rules_radio_option = (By.CSS_SELECTOR, "input[name='status-cyaml.gdpr.checklist.name-7-1'][value='cyaml.y']")
@@ -160,19 +167,13 @@ class AuditProjectLocators:
     gdpr_training_staff_radio_option = (By.CSS_SELECTOR, "input[name='status-cyaml.gdpr.checklist.name-9-3'][value='cyaml.y']")
     gdpr_training_staff_evidence_field = (By.ID, 'evidence-cyaml.gdpr.checklist.name-9-3')
 
-    new_audit_button = (By.ID, '')
+    new_audit_button = (By.ID, 'audit-project-wizard-start-btn-11a1')
     new_audit_form_ready = (By.ID, 'audit-container')
-    new_audit_previous_button = (By.ID, 'audit-wizard-prev-button') 
-    new_audit_next_button = (By.ID, 'audit-wizard-next-button')
-    new_audit_note_label = (By.ID, 'note-uid6-label')
-    new_audit_note_field = (By.ID, 'note-uid6')
-    new_audit_signature_field = (By.ID, 'signature-uid7')
-    new_audit_date_field = (By.ID, 'date-uid8')
-    new_audit_complete_button = (By.ID, 'complete-audit')
+    new_audit_previous_button = (By.ID, 'audit-project-wizard-prev-btn-68af') 
+    new_audit_next_button = (By.ID, 'audit-project-wizard-next-btn-55c1')
+    new_audit_note_label = (By.ID, 'audit-project-wizard-note-textarea-6a13-label')
+    new_audit_note_field = (By.ID, 'audit-project-wizard-note-textarea-6a13')
+    new_audit_signature_field = (By.ID, 'audit-project-wizard-signature-input-95d9')
+    new_audit_date_field = (By.ID, 'audit-project-wizard-date-input-65e3')
+    new_audit_complete_button = (By.ID, 'audit-project-wizard-complete-btn-acc3')
     audit_complete_message = (By.XPATH, "//div[@role='alert']//span[text()='Audit updated successfully']")
-    
-class ProjectListPageLocators:
-    project_list_url = UrlManager().project_list_url()
-    search_project_name = (By.ID, "search-project-name")
-    project_table = (By.CLASS_NAME, "projects-list")
-    project_search_button = (By.ID, "search-projects-button")
