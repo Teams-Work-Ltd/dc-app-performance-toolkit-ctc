@@ -49,28 +49,6 @@ def ctc_view_project_compliance_settings(webdriver, datasets):
 
     measure()    
 
-def ctc_set_project_compliance_settings(webdriver, datasets):
-    page = BasePage(webdriver)
-
-    admin_login(webdriver)
-    project_compliance_settings = ProjectComplianceSettings(webdriver, project_key=datasets['current_session']['project_key'])
-
-    @print_timing("ctc_set_project_compliance_settings")
-    def measure():
-
-        project_compliance_settings.go_to()
-        project_compliance_settings.wait_for_compliance_settings_loaded()
-
-        project_compliance_settings.set_compliance_owner()
-        project_compliance_settings.set_compliance_type()
-        project_compliance_settings.set_audit_frequency()
-        project_compliance_settings.set_audit_configuration()        
-        project_compliance_settings.set_compliance_categories()
-
-        project_compliance_settings.save_audit_configuration()
-
-    measure()        
-
 def ctc_view_project_audit_history(webdriver, datasets):
     page = BasePage(webdriver)
 
@@ -96,18 +74,31 @@ def ctc_view_project_audit_history_details(webdriver, datasets):
         project_audit_page.wait_for_audit_list()
         project_audit_page.view_audit_history()
 
-    measure()      
+    measure()       
 
-def ctc_complete_new_audit(webdriver, datasets):
+def ctc_configure_compliance_settings_and_complete_audit(webdriver, datasets):
     page = BasePage(webdriver)
 
     admin_login(webdriver)
-    project_audit_page = AuditProject(webdriver, project_key=datasets['current_session']['project_key'])
+    project_key = datasets['current_session']['project_key']
+    project_compliance_settings = ProjectComplianceSettings(webdriver, project_key=project_key)
+    project_audit_page = AuditProject(webdriver, project_key=project_key)
 
-    @print_timing("ctc_complete_new_audit")
+    @print_timing("ctc_configure_compliance_settings_and_complete_audit")
     def measure():
+
+        project_compliance_settings.go_to()
+        project_compliance_settings.wait_for_compliance_settings_loaded()
+
+        project_compliance_settings.set_compliance_owner()
+        project_compliance_settings.set_compliance_type()
+        project_compliance_settings.set_audit_frequency()
+        project_compliance_settings.set_audit_configuration()        
+        project_compliance_settings.save_audit_configuration()
+
         project_audit_page.go_to()
-        project_audit_page.wait_for_audit_list()        
+        project_audit_page.wait_for_audit_list()      
+          
         project_audit_page.complete_new_audit()
 
-    measure()    
+    measure()        

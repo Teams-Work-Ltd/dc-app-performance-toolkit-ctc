@@ -54,17 +54,14 @@ def test_1_selenium_ctc_view_projects(jira_webdriver, jira_datasets, jira_screen
 def test_2_selenium_ctc_view_project_compliance_settings(jira_webdriver, jira_datasets, jira_screen_shots):
     extension_ui.ctc_view_project_compliance_settings(jira_webdriver, jira_datasets)
 
-def test_3_selenium_ctc_set_project_compliance_settings(jira_webdriver, jira_datasets, jira_screen_shots):
-    extension_ui.ctc_set_project_compliance_settings(jira_webdriver, jira_datasets)
-
-def test_4_selenium_ctc_view_project_audit_history(jira_webdriver, jira_datasets, jira_screen_shots):
+def test_3_selenium_ctc_view_project_audit_history(jira_webdriver, jira_datasets, jira_screen_shots):
     extension_ui.ctc_view_project_audit_history(jira_webdriver, jira_datasets)
 
-def test_5_selenium_ctc_view_project_audit_history_details(jira_webdriver, jira_datasets, jira_screen_shots):
+def test_4_selenium_ctc_view_project_audit_history_details(jira_webdriver, jira_datasets, jira_screen_shots):
     extension_ui.ctc_view_project_audit_history_details(jira_webdriver, jira_datasets)   
 
-def test_6_selenium_ctc_complete_new_audit(jira_webdriver, jira_datasets, jira_screen_shots):
-    extension_ui.ctc_complete_new_audit(jira_webdriver, jira_datasets)                           
+def test_5_selenium_ctc_configure_compliance_settings_and_complete_audit(jira_webdriver, jira_datasets, jira_screen_shots):
+    extension_ui.ctc_configure_compliance_settings_and_complete_audit(jira_webdriver, jira_datasets)                 
 
 
 # this action should be the last one

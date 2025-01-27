@@ -11,20 +11,20 @@
 # This value can not be altered after the configuration has been applied.
 # Only lowercase letters, numbers, dashes, and dots are allowed.
 # ! REQUIRED !
-environment_name = "dcapt-product"
+environment_name = "dcapt-jira"
 
 # Supported products: jira, confluence, bitbucket, crowd and bamboo.
 # For JSM set product as jira.
 # e.g.: products = ["jira"]
 # ! REQUIRED !
-products = ["product-to-deploy"]
+products = ["jira"]
 
 # License
 # To avoid storing license in a plain text file, we recommend storing it in an environment variable prefixed with `TF_VAR_` (i.e. `TF_VAR_jira_license`) and keep the below line commented out
 # If storing license as plain-text is not a concern for this environment, feel free to uncomment the following line and supply the license here.
 # ! IMPORTANT ! Please make sure valid license is used without spaces and new line symbols.
 # ! REQUIRED !
-jira_license = "jira-license"
+jira_license = "AAAB7Q0ODAoPeNqVUl1v2jAUfc+vsLSXTVuiJBRKkSytDaYLCoGSsA+JFzdckozgpLZDmn8/J4Bgo2Pao4/tc+45574LqERjypDdRWZ/YN8Nun3kBCGyTburORyoTHM2pBJwg+impds9zUsjYALCugCfbgE708mEzB333tN+ppwah3uySpvfmPghmc/mbkA0v9w+A5+uFwK4wLp1pCKvRcrrMx1bV/otWcHzVRlJoznoIl/LinIwaCTTHWDJS9CC8llEPC1asRYhO5qV9HRuiRQ7dYBJ4Hsw20t/oSLBE6dyRg7x65E529a715vkZWE+VZ3OxAuzcZbeJ08vdOzuYrNy7McwXrijun74yGT1CHG8xEt8dOIOsecOA+Lrnm3e3nS6feuaj0BS3ky0pplQToDvgCuKh+8qgbsfU0t3/X5P96bdR20D9VeVWmPK6pnmrdnvdCwt5gAsyYsC+JXcZyWPEirgzybPf7fRFDwVx1iJj3/38YbWWzswhFMdY+UWBQe36H3TAdqX8GE5QKeetAlNFcooi/5/GS626nzQ8025wvGX7TgmbmtTHlOWiv1WhUC34hP6lvMN8uTK0JycSaVElI0Mb1WntZEAW6nfOfssm9d6pR4bUW6Um/0cF1O36MW4V4I+iLbwPzV/AYsrWcswLgIVAI7iD63uC3S8v6eXI7H9PsXEhx7qAhUAlhOAGmcOB9X6J6uj4NzVlMrVIPw=X02nf"
 confluence_license = "confluence-license"
 bitbucket_license = "bitbucket-license"
 crowd_license = "crowd-license"
@@ -34,7 +34,7 @@ bamboo_license = "bamboo-license"
 # Number of product application nodes.
 # Note: For initial installation this value needs to be set to 1 and it can be changed only after product is fully
 # installed and configured.
-jira_replica_count = 1
+jira_replica_count = 4
 confluence_replica_count = 1
 bitbucket_replica_count = 1
 crowd_replica_count = 1
